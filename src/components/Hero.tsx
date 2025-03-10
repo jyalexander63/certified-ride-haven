@@ -1,90 +1,104 @@
 
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ChevronRight, Car } from 'lucide-react';
 import AnimatedSection from './ui/AnimatedSection';
-import { ChevronRight, CheckCircle, Shield } from 'lucide-react';
 
 const Hero = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Will be implemented when search functionality is available
+    console.log('Searching for:', searchTerm);
+  };
+
   return (
-    <section className="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center pt-16 overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute top-0 left-0 right-0 h-[70vh] bg-gradient-to-b from-diagme-50/50 to-transparent -z-10"></div>
+      <div 
+        className="absolute inset-0 z-0 bg-gradient-to-b from-diagme-50/70 to-transparent"
+        aria-hidden="true"
+      />
       
+      {/* Background image - loaded with priority */}
+      <div 
+        className="absolute inset-0 z-[-1] bg-cover bg-center"
+        style={{ 
+          backgroundImage: `url('https://images.unsplash.com/photo-1617469767053-8a5cb64a6812?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')`,
+          backgroundAttachment: 'fixed'
+        }}
+        aria-hidden="true"
+      />
+
       <div className="container px-4 md:px-6 mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <AnimatedSection className="max-w-2xl">
-            <div className="inline-flex items-center mb-6 rounded-full border border-diagme-100 bg-diagme-50 px-3 py-1">
-              <Badge>
-                <Shield className="h-3.5 w-3.5 mr-1" />
-                <span className="text-xs font-medium">Certified Vehicles Only</span>
-              </Badge>
-            </div>
-            
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-charcoal-900 mb-6">
-              Find your perfect <span className="text-gradient">certified</span> car with confidence
-            </h1>
-            
-            <p className="text-charcoal-600 text-lg md:text-xl mb-8 max-w-xl">
-              Diagme connects you with verified, certified vehicles, eliminating uncertainty and providing a seamless car buying experience.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-diagme-600 hover:bg-diagme-700 h-12 px-6 text-base">
-                Browse Certified Cars
-                <ChevronRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button variant="outline" className="border-silver-200 h-12 px-6 text-base">
-                How It Works
-              </Button>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-6 mt-10">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-diagme-600" />
-                <span className="text-charcoal-700">Thoroughly Inspected</span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0">
+          <div className="lg:col-span-7">
+            <AnimatedSection direction="left">
+              <div className="inline-flex items-center rounded-full border border-diagme-100 bg-diagme-50 px-3 py-1 mb-4">
+                <span className="text-xs font-medium text-diagme-800">Introducing Diagme</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-diagme-600" />
-                <span className="text-charcoal-700">Verified History</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-diagme-600" />
-                <span className="text-charcoal-700">Honest Pricing</span>
-              </div>
-            </div>
-          </AnimatedSection>
-          
-          <AnimatedSection direction="right" delay={300}>
-            <div className="relative">
-              <div className="absolute -left-10 -top-10 w-64 h-64 bg-diagme-100 rounded-full blur-3xl opacity-50 animate-pulse-subtle"></div>
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl animate-float">
-                <img 
-                  src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                  alt="Luxury certified car" 
-                  className="w-full h-auto object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-6">
-                  <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4 max-w-sm">
-                    <div className="flex justify-between items-center mb-2">
-                      <h3 className="font-display font-bold text-lg">2023 Porsche Taycan</h3>
-                      <Badge className="bg-diagme-100 text-diagme-800">Certified</Badge>
-                    </div>
-                    <p className="text-charcoal-900 font-semibold text-xl">$89,500</p>
-                  </div>
+              
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-charcoal-900 mb-4 md:mb-6">
+                Trust the <span className="text-gradient">journey</span> to your next vehicle
+              </h1>
+              
+              <p className="text-charcoal-700 text-lg md:text-xl mb-8 max-w-2xl">
+                Diagme offers certified pre-owned vehicles with comprehensive history checks and expert inspections. Drive with confidence knowing your car has been thoroughly vetted.
+              </p>
+              
+              <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3 mb-10">
+                <div className="relative flex-grow">
+                  <Car className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-charcoal-400" />
+                  <Input
+                    type="text"
+                    placeholder="Search by make, model, or keyword"
+                    className="pl-10 pr-4 py-6 w-full text-base"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
                 </div>
+                <Button type="submit" className="bg-diagme-600 hover:bg-diagme-700 px-6 py-6">
+                  <span>Search Vehicles</span>
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </Button>
+              </form>
+              
+              <div className="flex flex-wrap items-center gap-4 text-charcoal-700">
+                <AnimatedSection delay={100}>
+                  <div className="flex items-center gap-2">
+                    <div className="bg-diagme-50 rounded-full p-1">
+                      <ChevronRight className="h-4 w-4 text-diagme-600" />
+                    </div>
+                    <p>Transparent pricing</p>
+                  </div>
+                </AnimatedSection>
+                
+                <AnimatedSection delay={200}>
+                  <div className="flex items-center gap-2">
+                    <div className="bg-diagme-50 rounded-full p-1">
+                      <ChevronRight className="h-4 w-4 text-diagme-600" />
+                    </div>
+                    <p>150+ point inspection</p>
+                  </div>
+                </AnimatedSection>
+                
+                <AnimatedSection delay={300}>
+                  <div className="flex items-center gap-2">
+                    <div className="bg-diagme-50 rounded-full p-1">
+                      <ChevronRight className="h-4 w-4 text-diagme-600" />
+                    </div>
+                    <p>30-day money back guarantee</p>
+                  </div>
+                </AnimatedSection>
               </div>
-            </div>
-          </AnimatedSection>
+            </AnimatedSection>
+          </div>
         </div>
       </div>
     </section>
   );
 };
-
-const Badge = ({ children }: { children: React.ReactNode }) => (
-  <span className="inline-flex items-center text-diagme-800 font-medium">
-    {children}
-  </span>
-);
 
 export default Hero;
